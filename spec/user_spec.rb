@@ -17,5 +17,12 @@ RSpec.describe User, type: :model do
       expect(@user.save).to be false
     end
 
+    it "should not create user when password length is too short" do
+      user_params = { first_name: "William", last_name: "Riker", email: "wt.riker@starfleet.com", password: "1234567", password_confirmation: "1234567" }
+      @user = User.new(user_params)
+
+      expect(@user.save).to be false
+    end
+
   end
 end
