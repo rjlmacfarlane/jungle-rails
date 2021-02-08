@@ -24,5 +24,14 @@ RSpec.describe User, type: :model do
       expect(@user.save).to be false
     end
 
+    describe '.authenticate_with_credentials' do
+      it "should return a user if email and password are correct" do
+        user_params = { first_name: "Commander", last_name: "Data", email: "data@starfleet.com", password: "12345678", password_confirmation: "12345678" }
+        @user = User.new(user_params)
+        @user.save
+  
+        expect(User.authenticate_with_credentials("data@starfleet.com", "12345678").class).to be User
+      end
+    end
   end
 end
