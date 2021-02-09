@@ -32,6 +32,22 @@ RSpec.describe User, type: :model do
   
         expect(User.authenticate_with_credentials("data@starfleet.com", "12345678").class).to be User
       end
+ 
+      it "should return nil if email is incorrect" do
+        user_params = { first_name: "Geordi", last_name: "LaForge", email: "g.laforge@starfleet.com", password: "12345678", password_confirmation: "12345678" }
+        @user = User.new(user_params)
+        @user.save
+  
+        expect(User.authenticate_with_credentials("glaforge@starfleet.com", "12345678")).to be nil
+      end
+  
+      it "should return nil if password is incorrect" do
+        user_params = { first_name: "Beverly", last_name: "Crusher", email: "b.crusher@starfleetmedical.com", password: "12345678", password_confirmation: "12345678" }
+        @user = User.new(user_params)
+        @user.save
+  
+        expect(User.authenticate_with_credentials("b.crusher@starfleetmedical.com", "87654321")).to be nil
+      end
     end
   end
 end
